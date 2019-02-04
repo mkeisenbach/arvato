@@ -28,8 +28,8 @@ def clean_data(df, feat_info, row_threshold):
     # Drop rows with missing values
     missing_by_row = clean_df.isnull().sum(axis=1)
 
-    clean_df = clean_df[missing_by_row <= row_threshold]
     dropped_df = clean_df[missing_by_row > row_threshold]
+    clean_df = clean_df[missing_by_row <= row_threshold]
     
     # Feature Re-encoding and Engineering
     # Recode 10's to 0 for D19 columns that need it
