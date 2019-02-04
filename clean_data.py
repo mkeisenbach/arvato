@@ -24,6 +24,10 @@ def clean_data(df, feat_info, row_threshold):
        'D19_VERSAND_ONLINE_QUOTE_12', 'GEBURTSJAHR', 'KBA05_BAUMAX',
        'KK_KUNDENTYP', 'TITEL_KZ']
     clean_df = clean_df.drop(to_drop, axis='columns')
+
+    # Drop KBA columns
+    kba_cols = clean_df.columns[clean_df.columns.str.startswith('KBA')]
+    clean_df.drop(list(kba_cols), axis='columns', inplace=True)
     
     # Drop rows with missing values
     missing_by_row = clean_df.isnull().sum(axis=1)
