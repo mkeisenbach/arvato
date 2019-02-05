@@ -69,7 +69,9 @@ def clean_data(df, feat_info, row_threshold):
     clean_df['wealth'] = clean_df.CAMEO_INTL_2015[clean_df.CAMEO_INTL_2015.notnull()].map(lambda x: str(x)[0])
     clean_df['life_stage'] = clean_df.CAMEO_INTL_2015[clean_df.CAMEO_INTL_2015.notnull()].map(lambda x: str(x)[1])
     
-    clean_df.drop(['PRAEGENDE_JUGENDJAHRE', 'CAMEO_INTL_2015'], axis=1, inplace=True)
+    # Drop unneeded variables
+    clean_df.drop(['PRAEGENDE_JUGENDJAHRE', 'CAMEO_INTL_2015',
+                   'LP_LEBENSPHASE_GROB', 'LP_LEBENSPHASE_FEIN'], axis=1, inplace=True)
 
     # Return the cleaned dataframe and dropped rows.
     return clean_df, dropped_df        
