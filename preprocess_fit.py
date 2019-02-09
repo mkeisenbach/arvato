@@ -10,18 +10,20 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-def preprocess_fit(clean_df, pca_n, impute_strat='median'):
+def preprocess_fit(clean_df, pca_n=0, impute_strat='median'):
     # Impute missing values
     imputer = SimpleImputer(missing_values=np.nan, strategy=impute_strat)
-    imputed_df = imputer.fit_transform(clean_df)
+    return_df = imputer.fit_transform(clean_df)
     
     # Apply feature scaling
     scaler = StandardScaler()
-    scaled_df = scaler.fit_transform(imputed_df)
+    return_df = scaler.fit_transform(return_df)
     
     # PCA
-    pca = PCA(pca_n)
-    pca_df = pca.fit_transform(scaled_df)
+    pca = None
+    if pca_n > 0:
+        pca = PCA(pca_n)
+        return_df = pca.fit_transform(return_df)
     
-    return (pca_df, imputer, scaler, pca)
+    return (return_df, imputer, scaler, pca)
     
