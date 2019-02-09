@@ -19,10 +19,16 @@ def clean_data(df, feat_info, row_threshold):
     clean_df[clean_df.isin(missing_values)] = np.nan
     
     # Drop columns with missing values
-    to_drop = ['AGER_TYP', 'ALTER_HH', 'D19_BANKEN_ONLINE_QUOTE_12',
-       'D19_GESAMT_ONLINE_QUOTE_12', 'D19_KONSUMTYP',
-       'D19_VERSAND_ONLINE_QUOTE_12', 'GEBURTSJAHR', 'KBA05_BAUMAX',
-       'KK_KUNDENTYP', 'TITEL_KZ']
+    to_drop = ['AGER_TYP', 
+               'ALTER_HH', 
+               'D19_BANKEN_ONLINE_QUOTE_12',
+               'D19_GESAMT_ONLINE_QUOTE_12', 
+               'D19_KONSUMTYP',
+               'D19_VERSAND_ONLINE_QUOTE_12', 
+               'GEBURTSJAHR',
+               'KBA05_BAUMAX',
+               'KK_KUNDENTYP',
+               'TITEL_KZ']
     clean_df = clean_df.drop(to_drop, axis='columns')
 
     # Drop KBA columns
