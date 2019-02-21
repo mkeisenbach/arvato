@@ -4,6 +4,8 @@ Created on Sun Feb  3 15:18:37 2019
 
 @author: Mei
 """
+import sys
+import os
 import pandas as pd
 import numpy as np
 
@@ -80,4 +82,33 @@ def clean_data(df, feat_info, row_threshold):
                    'LP_LEBENSPHASE_GROB', 'LP_LEBENSPHASE_FEIN'], axis=1, inplace=True)
 
     # Return the cleaned dataframe and dropped rows.
-    return clean_df, dropped_df        
+    return clean_df, dropped_df
+
+
+# Parse missing_or_known string into a list
+def parse_missing(s):
+    a = s[1:-1].split(',')
+    return a
+
+    
+if __name__ == '__main__':
+    
+    data_filepath, features_filepath = sys.argv[1:]
+    
+    # Load data
+    print('Loading data...')
+    df = pd.read_csv(data_filepath, sep=';')
+
+    # Load feature info
+    feat_info = pd.read_csv('features.csv')
+    feat_info.set_index('attribute', inplace=True)
+    feat_info['missing_or_unknown'] = feat_info['missing_or_unknown'].apply(parse_missing)
+    
+    print('Cleaning data...')
+    df_clean, df_dropped = clean_data(df, feat_info, row_threshold=10)
+    
+    print('Writing clean data...')
+    filename, ext = os.path.basename(data_filepath).split('.')
+    df_clean.to_csv(filename+'_clean.csv', sep=';')
+    df_dropped.to_csv(filename+'_dropped.csv', sep=';')
+    
