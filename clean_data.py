@@ -5,7 +5,6 @@ Created on Sun Feb  3 15:18:37 2019
 @author: Mei
 """
 import sys
-import os
 import pandas as pd
 import numpy as np
 
@@ -108,7 +107,7 @@ if __name__ == '__main__':
     df_clean, df_dropped = clean_data(df, feat_info, row_threshold=10)
     
     print('Writing clean data...')
-    filename, ext = os.path.basename(data_filepath).split('.')
-    df_clean.to_csv(filename+'_clean.csv', sep=';')
-    df_dropped.to_csv(filename+'_dropped.csv', sep=';')
+    filepath, ext = data_filepath.split('.')
+    df_clean.to_csv(filepath+'_clean.csv', sep=';')
+    df_dropped.to_csv(filepath+'_dropped.csv', sep=';')
     
