@@ -17,7 +17,15 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 
 def build_model(pca_n, n_clusters):
-
+    '''Creates a pipeline for doing KMeans clustering
+    
+    Args:
+        pca_n (int): number of pca components
+        n_clusters (int): number of clusters
+    
+    Returns:
+        pipeline (sklearn.pipeline.Pipeline)
+    '''
     pipeline = Pipeline([
             ('impute', SimpleImputer(missing_values=np.nan, strategy='median')),
             ('scale', StandardScaler()),
@@ -28,7 +36,15 @@ def build_model(pca_n, n_clusters):
     return pipeline
 
 if __name__ == '__main__':
+    '''Fits a clustering model and saves pipeline to a pickle file
+    with name 'clust_model' + str(n_clusters) + '.pkl'
     
+    Args:
+        cleandata_filepath (str): filepath of cleaned data
+        pca_n (int): number of pca components        
+        n_clusters (int): number of clusters
+    '''
+
     cleandata_filepath, pca_n, n_clusters = sys.argv[1:]
     pca_n = int(pca_n)
     n_clusters = int(n_clusters)

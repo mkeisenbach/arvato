@@ -9,6 +9,21 @@ import pandas as pd
 import numpy as np
 
 def clean_data(df, feat_info, row_threshold):
+    '''Processes AZDIAS data
+        - Converts missing values to np.nan using loaded features table
+        - Drops unwanted columns and rows
+        - Perfroms feature enginerring
+    
+    Args:
+        df (pd.Dataframe): data to be cleaned
+        feat_info (pd.Dataframe): feature information
+        row_threshold (int): max. number of missing values allowed for a row
+    
+    Returns:
+        cleaned_df (pd.Dataframe): cleaned rows
+        dropped_df (pd.Dataframe): dropped rows
+    '''
+    
     clean_df = df.copy()
     
     # Drop unwanted columns    
@@ -91,7 +106,13 @@ def parse_missing(s):
 
     
 if __name__ == '__main__':
+    '''Cleans and saves data to new files. New files will have "_clean"
+    and "_dropped" appended to original data filename.
     
+    Args:
+        data_filepath (str): filepath to data
+        features_filepath (str): filepath to feature information
+    '''    
     data_filepath, features_filepath = sys.argv[1:]
     
     # Load data
