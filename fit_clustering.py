@@ -30,6 +30,8 @@ def build_model(pca_n, n_clusters):
 if __name__ == '__main__':
     
     cleandata_filepath, pca_n, n_clusters = sys.argv[1:]
+    pca_n = int(pca_n)
+    n_clusters = int(n_clusters)
     
     print('Loading data...')
     clean_df = pd.read_csv(cleandata_filepath, sep=';')
