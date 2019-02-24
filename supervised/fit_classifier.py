@@ -6,11 +6,13 @@ Created on Fri Feb 22 16:19:46 2019
 """
 import sys
 import pandas as pd
+
 from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import GridSearchCV
+from sklearn.externals import joblib
 
 from keras.models import Sequential
 from keras.layers import Activation, Dense, Dropout, BatchNormalization
@@ -61,14 +63,6 @@ def make_model(n_features, learn_rate):
 
     return model
 
-def build_pipeline(preprocessor, n_features, learn_rate):
-    pipeline = Pipeline([
-            ('preprocess', preprocessor),
-            ('kmeans', KerasClassifier(build_fn=make_model(n_features, learn_rate), 
-                                       verbose=False))
-            ])
-
-    return pipeline
 
 if __name__ == '__main__':
 
@@ -79,31 +73,40 @@ if __name__ == '__main__':
     feat_info.set_index('attribute', inplace=True)
     
     # Load data
+    print('Loading data...')
     clean_df = pd.read_csv(cleandata_filepath, sep=';')
+#    clean_df.drop('Unnamed: 0', axis=1, inplace=True)
     y = clean_df.RESPONSE
-    X = clean_df.drop('RESPONSE', axis=1)
+    X = clean_df.drop(['RESPONSE', 'LNR'], axis=1)
     
     # Build preprocessor
     numerical_columns = feat_info[feat_info.type == 'numeric'].index.drop(['GEBURTSJAHR','KBA13_ANZAHL_PKW'])
     categorical_columns = X.columns.drop(numerical_columns)
-    preprocessor = build_preprocessor(feat_info, numerical_columns, categorical_columns)
     
     # Build model
-    model = KerasClassifier(build_fn=make_model, verbose=False)
+    print('Building model...')
+    model = Pipeline([
+                ('preprocess', build_preprocessor(feat_info, numerical_columns, categorical_columns)),
+                ('clf', KerasClassifier(build_fn=make_model, verbose=True))
+            ])
+
     
     class_weight = {0:1, 1:15}
-    param_grid = {'n_features':[X.shape[1]],
-              'learn_rate':[0.0001],
-              'class_weight':[class_weight],
-              'batch_size':[64],
-              'epochs':[30]}
+    param_grid = {'clf__n_features':[X.shape[1]],
+                  'clf__learn_rate':[0.0001],
+                  'clf__class_weight':[class_weight],
+                  'clf__batch_size':[64],
+                  'clf__epochs':[30]}
     
     grid = GridSearchCV(estimator=model, param_grid=param_grid, scoring='roc_auc', cv=3)
 
     # Fit model
+    print('Fitting model...')
     grid_result = grid.fit(X, y)
     print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
 
     # Save model
-    grid.best_estimator_.model.save(model_name+'.h5')
+    print('Saving model...')    
+    joblib.dump(grid, model_name+'.pkl')
+    
     
