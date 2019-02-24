@@ -17,10 +17,10 @@ The data used for this project not publically available. It was provided only to
 1. Clean population and customer data
 
   - From the segmentation directory, run: 
-  <pre>python clean_data.py <data_dir>/Udacity_AZDIAS_052018.csv ../features.csv</pre>
+  <pre>python clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv ../features.csv</pre>
 
   - From the segmentation directory, run: 
-  <pre>python clean_data.py <data_dir>/Udacity_CUSTOMERS_052018.csv.csv ../features.csv</pre>
+  <pre>python clean_data.py [data_dir]/Udacity_CUSTOMERS_052018.csv.csv ../features.csv</pre>
 
 2. Run the Customer Segmentation Jupyter notebook
 
@@ -28,17 +28,17 @@ The data used for this project not publically available. It was provided only to
 1. Clean the training and test data
 
 - From the supervised directory, run: 
-  <pre>python clean_data.py <data_dir>/Udacity_MAILOUT_052018_TRAIN.csv ../features.csv</pre>
+  <pre>python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv ../features.csv</pre>
 
 - From the supervised directory, 
-  <pre>run: python clean_data.py <data_dir>/Udacity_MAILOUT_052018_TEST.csv ../features.csv</pre>
+  <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv ../features.csv</pre>
 
 2. Run the script to train the model:
 
 - From the supervised directory, run: 
-  <pre>python fit_classifier.py <data_dir>/Udacity_MAILOUT_052018_TRAIN_clean.csv  ../features.csv <model></pre>
+  <pre>python fit_classifier.py [data_dir]/Udacity_MAILOUT_052018_TRAIN_clean.csv  ../features.csv [model]</pre>
 
 3. Run the script to predict probabilities:
 
 - From the supervised directory, run: 
-  <pre>python predict.py <data_dir>/Udacity_MAILOUT_052018_TEST_clean.csv <model>.pkl preds.csv</pre>
+  <pre>python predict.py [data_dir]/Udacity_MAILOUT_052018_TEST_clean.csv [model].pkl preds.csv</pre>
