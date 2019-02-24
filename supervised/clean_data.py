@@ -5,6 +5,7 @@ Created on Fri Feb 22 14:48:48 2019
 @author: Mei
 """
 import sys
+import os
 import numpy as np
 import pandas as pd
 
@@ -74,7 +75,7 @@ def clean_data(df, feat_info):
     # Drop unneeded variables
     clean_df.drop(['PRAEGENDE_JUGENDJAHRE', 'CAMEO_INTL_2015',
                    'LP_LEBENSPHASE_GROB', 'LP_LEBENSPHASE_FEIN',
-                   'LNR', 'D19_LETZTER_KAUF_BRANCHE', 'EINGEFUEGT_AM'], axis=1, inplace=True)
+                   'D19_LETZTER_KAUF_BRANCHE', 'EINGEFUEGT_AM'], axis=1, inplace=True)
 
     # Return the cleaned dataframe and dropped rows.
     return clean_df
@@ -95,19 +96,20 @@ if __name__ == '__main__':
     '''    
     data_filepath, features_filepath = sys.argv[1:]
     
+    # Load feature info
+    feat_info = pd.read_csv(features_filepath)
+    feat_info.set_index('attribute', inplace=True)
+    feat_info['missing_or_unknown'] = feat_info['missing_or_unknown'].apply(parse_missing)
+    
     # Load data
     print('Loading data...')
     df = pd.read_csv(data_filepath, sep=';')
 
-    # Load feature info
-    feat_info = pd.read_csv('features.csv')
-    feat_info.set_index('attribute', inplace=True)
-    feat_info['missing_or_unknown'] = feat_info['missing_or_unknown'].apply(parse_missing)
-    
     print('Cleaning data...')
     df_clean = clean_data(df, feat_info)
     
     print('Writing clean data...')
-    filepath, ext = data_filepath.split('.')
-    df_clean.to_csv(filepath+'_clean.csv', sep=';')
+    dirpath = os.path.dirname(data_filepath)
+    filepath, ext = os.path.basename(data_filepath).split('.')
+    df_clean.to_csv(os.path.join(dirpath, filepath+'_clean.csv'), sep=';', index=False)
     
