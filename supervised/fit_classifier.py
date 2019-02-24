@@ -24,6 +24,14 @@ def parse_missing(s):
     return a
 
 def build_preprocessor(feat_info, numerical_columns, categorical_columns):
+    '''
+    Args:
+        numerical_columns: list of numerical columns
+        categorical_columns: list of categorical columns
+    
+    Returns:
+        preprocessor (sklearn.compose.ColumnTransformer)
+    '''
     numerical_pipeline = make_pipeline(
         SimpleImputer(strategy='median'),
         StandardScaler())
@@ -40,7 +48,13 @@ def build_preprocessor(feat_info, numerical_columns, categorical_columns):
 
 
 if __name__ == '__main__':
-
+    ''' Fits the classifier on the train training data
+    
+    Args:
+        cleandata_filepath (str): Filepath to the cleaned training data
+        features_filepath (str): Filepath to the feature information
+        model_name (str): Name of model to be saved as a pickle file
+    '''
     cleandata_filepath, features_filepath, model_name = sys.argv[1:]
     
     # Load feature info
