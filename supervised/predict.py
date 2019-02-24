@@ -5,9 +5,12 @@ Created on Sat Feb 23 18:05:08 2019
 @author: Mei
 """
 import sys
-import numpy as np
 import pandas as pd
+
 from sklearn.externals import joblib
+
+# Needed for loaded model
+from model import make_model
 
 if __name__ == '__main__':
     testdata_filepath, model_filepath, submission_filename = sys.argv[1:]
@@ -26,13 +29,11 @@ if __name__ == '__main__':
     print('Making predictions...')
     test_pred = model.predict_proba(test)
 
-    # Convert probabilities to labels    
-    threshold = .135
-    y_class = np.where(test_pred[:,1] > threshold, 1, 0)
-    
     # Create submission
-    submission = pd.DataFrame({'LNR':LNR, 'RESPONSE':y_class})
+    submission = pd.DataFrame({'LNR':LNR, 'RESPONSE':test_pred[:,1]})
     
     # Write to file
     print('Writing predictions to file...')
     submission.to_csv(submission_filename, index=False)
+    
+    print('Done')
