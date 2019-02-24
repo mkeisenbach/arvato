@@ -14,10 +14,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import GridSearchCV
 from sklearn.externals import joblib
 
-from keras.models import Sequential
-from keras.layers import Activation, Dense, Dropout, BatchNormalization
 from keras.wrappers.scikit_learn import KerasClassifier
-from keras.optimizers import Adam
+
+from model import make_model
 
 # Parse missing_or_known string into a list
 def parse_missing(s):
@@ -40,30 +39,6 @@ def build_preprocessor(feat_info, numerical_columns, categorical_columns):
     return preprocessor
 
 
-def make_model(n_features, learn_rate):
-    model = Sequential()
-    model.add(Dense(150, input_shape=(n_features,),
-              kernel_initializer='glorot_normal'))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.25))
-    model.add(Dense(75, kernel_initializer='glorot_normal'))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.15))
-    model.add(Dense(25, kernel_initializer='glorot_normal'))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.10))
-    model.add(Dense(1, activation='sigmoid'))
-
-    model.compile(loss='binary_crossentropy',
-                  optimizer=Adam(lr=learn_rate),
-                  metrics=['acc'])
-
-    return model
-
-
 if __name__ == '__main__':
 
     cleandata_filepath, features_filepath, model_name = sys.argv[1:]
@@ -75,7 +50,6 @@ if __name__ == '__main__':
     # Load data
     print('Loading data...')
     clean_df = pd.read_csv(cleandata_filepath, sep=';')
-#    clean_df.drop('Unnamed: 0', axis=1, inplace=True)
     y = clean_df.RESPONSE
     X = clean_df.drop(['RESPONSE', 'LNR'], axis=1)
     
@@ -109,4 +83,5 @@ if __name__ == '__main__':
     print('Saving model...')    
     joblib.dump(grid, model_name+'.pkl')
     
+    print('Done')
     
