@@ -115,15 +115,15 @@ if __name__ == '__main__':
     '''    
     data_filepath, features_filepath = sys.argv[1:]
     
+    # Load feature info
+    feat_info = pd.read_csv(features_filepath)
+    feat_info.set_index('attribute', inplace=True)
+    feat_info['missing_or_unknown'] = feat_info['missing_or_unknown'].apply(parse_missing)
+    
     # Load data
     print('Loading data...')
     df = pd.read_csv(data_filepath, sep=';')
 
-    # Load feature info
-    feat_info = pd.read_csv('features.csv')
-    feat_info.set_index('attribute', inplace=True)
-    feat_info['missing_or_unknown'] = feat_info['missing_or_unknown'].apply(parse_missing)
-    
     print('Cleaning data...')
     df_clean, df_dropped = clean_data(df, feat_info, row_threshold=10)
     
