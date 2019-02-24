@@ -18,12 +18,7 @@ from keras.wrappers.scikit_learn import KerasClassifier
 
 from model import make_model
 
-# Parse missing_or_known string into a list
-def parse_missing(s):
-    a = s[1:-1].split(',')
-    return a
-
-def build_preprocessor(feat_info, numerical_columns, categorical_columns):
+def build_preprocessor(numerical_columns, categorical_columns):
     '''
     Args:
         numerical_columns: list of numerical columns
@@ -67,14 +62,14 @@ if __name__ == '__main__':
     y = clean_df.RESPONSE
     X = clean_df.drop(['RESPONSE', 'LNR'], axis=1)
     
-    # Build preprocessor
+    # Define column types for the preprocessor
     numerical_columns = feat_info[feat_info.type == 'numeric'].index.drop(['GEBURTSJAHR','KBA13_ANZAHL_PKW'])
     categorical_columns = X.columns.drop(numerical_columns)
     
     # Build model
     print('Building model...')
     model = Pipeline([
-                ('preprocess', build_preprocessor(feat_info, numerical_columns, categorical_columns)),
+                ('preprocess', build_preprocessor(numerical_columns, categorical_columns)),
                 ('clf', KerasClassifier(build_fn=make_model, verbose=True))
             ])
 
@@ -84,7 +79,7 @@ if __name__ == '__main__':
                   'clf__learn_rate':[0.0001],
                   'clf__class_weight':[class_weight],
                   'clf__batch_size':[64],
-                  'clf__epochs':[30]}
+                  'clf__epochs':[5]}
     
     grid = GridSearchCV(estimator=model, param_grid=param_grid, scoring='roc_auc', cv=3)
 
