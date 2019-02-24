@@ -13,6 +13,13 @@ from sklearn.externals import joblib
 from model import make_model
 
 if __name__ == '__main__':
+    ''' Predict probabilities for test data
+    
+    Args:
+        testdata_filepath (str): filepath to cleaned test data
+        model_filepath (str): filepath to model
+        submission_filename (str): name to be used for output file
+    '''
     testdata_filepath, model_filepath, submission_filename = sys.argv[1:]
     
     # Load model
