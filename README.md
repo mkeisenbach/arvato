@@ -58,3 +58,14 @@ The data used for this project not publically available. It was provided only to
 
 - From the supervised directory, run: 
   <pre>python predict.py [data_dir]/Udacity_MAILOUT_052018_TEST_clean.csv [model].pkl preds.csv</pre>
+
+## Results
+The detailed results of the analysis will presented in a Medium Post.
+
+### Customer segmentation
+- One group was found to be more likely to be customers: These indivduals were more religious, older and savers.
+- Two groups were found to be less likely to be customers: 1) Individuals with low purchasing activity and wealth (also younger) and 2) Individuals from areas with low population density and were less cultural minded/religiousness
+
+### Marketing predictions
+The final model had an auc_roc score of 0.6609 and a Kaggle score of 0.68313 (https://www.kaggle.com/c/udacity-arvato-identify-customers/leaderboard).
+
