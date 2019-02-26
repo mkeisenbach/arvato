@@ -9,9 +9,25 @@ Additional libraries needed:
 - keras
 - tensorflow (tensorflow-gpu is preferred as the neural network training can take quite a lot of time)
 
+## Project Motivation
+This project was done as the capstone requirement for Udacity's Data Scientist Nanodegree. The goal was to characterize what types of individuals are more likely to be customers of a mail-order retailer and predict which customers would respond positively to marketing campaigns.
+
 ## Data
-The data used for this project not publically available. It was provided only to those participating in an "in class" competition.
-	
+The data used for this project not publically available. It was provided only to those participating in the "in class" competition.
+
+## Files
+- features.csv - data dictionary
+
+- segmentation/Arvato Project Workbook.ipynb - data expoloration and preprocessing
+- segmentation/Customer Segmentation Report.ipynb - analysis of customers
+- segmentation/clean_data.py - python script for cleaning the segmentation data
+- segmenation/fit_clustering.py - python script for fitting clustering model
+
+- supervised/Supervised Learning Using Keras.ipynb - workbook for classification task
+- supervised/clean_data - python script for cleaning classification data
+- supervised/fit_classifier.py - python script for fitting the classifier
+- supervised/predict.py - python script for making predictions
+
 ## Instructions
 ### Customer Segmentation Report
 1. Clean population and customer data
