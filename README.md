@@ -43,7 +43,7 @@ The data used for this project not publically available. It was provided only to
 
 2. Run the Customer Segmentation Jupyter notebook
 
-### Supervised Learning Model
+### Marketing predictions
 1. Clean the training and test data
 
 - From the supervised directory, run: 
