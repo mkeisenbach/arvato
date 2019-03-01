@@ -18,15 +18,18 @@ The data used for this project not publically available. It was provided only to
 ## Files
 - features.csv - data dictionary
 
-- segmentation/Arvato Project Workbook.ipynb - data expoloration and preprocessing
-- segmentation/Customer Segmentation Report.ipynb - analysis of customers
-- segmentation/clean_data.py - python script for cleaning the segmentation data
-- segmenation/fit_clustering.py - python script for fitting clustering model
+### Customer Segmentation
+- segmentation/Arvato Project Workbook.ipynb - Data expoloration and preprocessing
+- segmentation/Customer Segmentation Report.ipynb - Analysis of customers
+- segmentation/Mailout.ipynb - Analysis of mailout data using clustering model
+- segmentation/clean_data.py - Python script for cleaning the segmentation data
+- segmenation/fit_clustering.py - File containing clustering pipeline function. This can also be used as a standlone script.
 
-- supervised/Supervised Learning Using Keras.ipynb - workbook for classification task
-- supervised/clean_data - python script for cleaning classification data
-- supervised/fit_classifier.py - python script for fitting the classifier
-- supervised/predict.py - python script for making predictions
+### Marketing Predictions
+- supervised/Supervised Learning Using Keras.ipynb - Workbook for classification task
+- supervised/clean_data - Python script for cleaning classification data
+- supervised/fit_classifier.py - Python script for fitting the classifier
+- supervised/predict.py - Python script for making predictions
 
 ## Instructions
 ### Customer Segmentation Report
