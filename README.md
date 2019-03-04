@@ -18,15 +18,18 @@ The data used for this project not publically available. It was provided only to
 ## Files
 - features.csv - data dictionary
 
-- segmentation/Arvato Project Workbook.ipynb - data expoloration and preprocessing
-- segmentation/Customer Segmentation Report.ipynb - analysis of customers
-- segmentation/clean_data.py - python script for cleaning the segmentation data
-- segmenation/fit_clustering.py - python script for fitting clustering model
+### Customer Segmentation
+- segmentation/Arvato Project Workbook.ipynb - Data expoloration and preprocessing
+- segmentation/Customer Segmentation Report.ipynb - Analysis of customers
+- segmentation/Mailout.ipynb - Analysis of mailout data using clustering model
+- segmentation/clean_data.py - Python script for cleaning the segmentation data
+- segmenation/fit_clustering.py - File containing clustering pipeline function. This can also be used as a standlone script.
 
-- supervised/Supervised Learning Using Keras.ipynb - workbook for classification task
-- supervised/clean_data - python script for cleaning classification data
-- supervised/fit_classifier.py - python script for fitting the classifier
-- supervised/predict.py - python script for making predictions
+### Marketing Predictions
+- supervised/Supervised Learning Using Keras.ipynb - Workbook for classification task
+- supervised/clean_data - Python script for cleaning classification data
+- supervised/fit_classifier.py - Python script for fitting the classifier
+- supervised/predict.py - Python script for making predictions
 
 ## Instructions
 ### Customer Segmentation Report
@@ -40,22 +43,19 @@ The data used for this project not publically available. It was provided only to
 
 2. Run the Customer Segmentation Jupyter notebook
 
-### Supervised Learning Model
+### Marketing predictions
 1. Clean the training and test data
-
 - From the supervised directory, run: 
   <pre>python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv ../features.csv</pre>
 
 - From the supervised directory, 
   <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv ../features.csv</pre>
 
-2. Run the script to train the model:
-
+2. Train the model:
 - From the supervised directory, run: 
   <pre>python fit_classifier.py [data_dir]/Udacity_MAILOUT_052018_TRAIN_clean.csv  ../features.csv [model]</pre>
 
-3. Run the script to predict probabilities:
-
+3. Make predictions:
 - From the supervised directory, run: 
   <pre>python predict.py [data_dir]/Udacity_MAILOUT_052018_TEST_clean.csv [model].pkl preds.csv</pre>
 
