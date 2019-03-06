@@ -26,18 +26,25 @@ def clean_data(df, feat_info):
     '''
 
     clean_df = df.copy()
-    
+        
     # Convert missing values to Nans
     missing_values = pd.Series(feat_info['missing_or_unknown'].values, index=feat_info.index).to_dict()
     clean_df[clean_df.isin(missing_values)] = np.nan
-      
+    
+    # Drop columns with missing values
+#    to_drop = ['AGER_TYP','ALTER_HH','GEBURTSJAHR','HH_DELTA_FLAG','KBA05_BAUMAX','KK_KUNDENTYP','KKK','REGIOTYP','TITEL_KZ','W_KEIT_KIND_HH']
+    
     to_drop = ['AGER_TYP', 'ALTER_HH', 'ALTER_KIND1', 'ALTER_KIND2', 'ALTER_KIND3',
        'ALTER_KIND4', 'EXTSEL992', 'GEBURTSJAHR', 'HH_DELTA_FLAG',
        'KBA05_BAUMAX', 'KK_KUNDENTYP', 'KKK', 'REGIOTYP', 'TITEL_KZ',
        'W_KEIT_KIND_HH']
     
     clean_df = clean_df.drop(to_drop, axis='columns')
-        
+
+    # Don't drop KBA columns
+    
+    # Don't drop rows with missing values
+    
     # Feature Re-encoding and Engineering
     # Recode 10's to 0 for D19 columns that need it
     recode = ['D19_BANKEN_DATUM', 'D19_BANKEN_OFFLINE_DATUM',
@@ -58,8 +65,9 @@ def clean_data(df, feat_info):
     clean_df['CAMEO_DEUG_2015'] = clean_df['CAMEO_DEUG_2015'].astype(float)
     
     # Re-encode categorical variable(s) to be kept in the analysis
-    recoded = pd.get_dummies(clean_df['OST_WEST_KZ'])
-    clean_df.drop('OST_WEST_KZ', axis=1, inplace=True)
+    categorical = ['OST_WEST_KZ', 'D19_LETZTER_KAUF_BRANCHE']
+    recoded = pd.get_dummies(clean_df[categorical])
+    clean_df.drop(categorical, axis=1, inplace=True)
     clean_df = pd.concat([clean_df, recoded], axis=1)
 
     # Engineer new variables
@@ -73,11 +81,12 @@ def clean_data(df, feat_info):
     clean_df['life_stage'] = clean_df.CAMEO_INTL_2015[clean_df.CAMEO_INTL_2015.notnull()].map(lambda x: int(str(x)[1]))
     
     # Drop unneeded variables
+    # LNR should be dropped after cleaning data so the values can be saved to a variable
     clean_df.drop(['PRAEGENDE_JUGENDJAHRE', 'CAMEO_INTL_2015',
                    'LP_LEBENSPHASE_GROB', 'LP_LEBENSPHASE_FEIN',
-                   'D19_LETZTER_KAUF_BRANCHE', 'EINGEFUEGT_AM'], axis=1, inplace=True)
+                   'EINGEFUEGT_AM'], axis=1, inplace=True)
 
-    # Return the cleaned dataframe and dropped rows.
+    # Return the cleaned dataframe
     return clean_df
 
 # Parse missing_or_known string into a list
@@ -113,3 +122,4 @@ if __name__ == '__main__':
     filepath, ext = os.path.basename(data_filepath).split('.')
     df_clean.to_csv(os.path.join(dirpath, filepath+'_clean.csv'), sep=';', index=False)
     
+    print('Done')
