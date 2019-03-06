@@ -7,40 +7,14 @@ Created on Fri Feb 22 16:19:46 2019
 import sys
 import pandas as pd
 
-from sklearn.pipeline import make_pipeline, Pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.externals import joblib
 
 from keras.wrappers.scikit_learn import KerasClassifier
 
 from model import make_model
-
-def build_preprocessor(numerical_columns, categorical_columns):
-    '''
-    Args:
-        numerical_columns: list of numerical columns
-        categorical_columns: list of categorical columns
-    
-    Returns:
-        preprocessor (sklearn.compose.ColumnTransformer)
-    '''
-    numerical_pipeline = make_pipeline(
-        SimpleImputer(strategy='median'),
-        StandardScaler())
-    
-    categorical_pipeline = make_pipeline(
-        SimpleImputer(strategy='most_frequent'))
-    
-    preprocessor = ColumnTransformer(
-        [('numerical_preprocessing', numerical_pipeline, numerical_columns),
-         ('categorical_preprocessing', categorical_pipeline, categorical_columns)],
-        remainder='drop')
-    
-    return preprocessor
-
+from preprocessor import make_preprocessor
 
 if __name__ == '__main__':
     ''' Fits the classifier on the train training data
@@ -69,7 +43,7 @@ if __name__ == '__main__':
     # Build model
     print('Building model...')
     model = Pipeline([
-                ('preprocess', build_preprocessor(numerical_columns, categorical_columns)),
+                ('preprocess', make_preprocessor(numerical_columns, categorical_columns)),
                 ('clf', KerasClassifier(build_fn=make_model, verbose=True))
             ])
 
@@ -79,7 +53,7 @@ if __name__ == '__main__':
                   'clf__learn_rate':[0.0001],
                   'clf__class_weight':[class_weight],
                   'clf__batch_size':[64],
-                  'clf__epochs':[5]}
+                  'clf__epochs':[30]}
     
     grid = GridSearchCV(estimator=model, param_grid=param_grid, scoring='roc_auc', cv=3)
 
