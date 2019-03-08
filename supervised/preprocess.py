@@ -33,3 +33,23 @@ def make_preprocessor(numerical_columns, categorical_columns):
     
     return preprocessor
 
+def get_columns(df_columns, feat_info):
+    '''Get numerical and categorical columns based on the dictionary.
+    Columns are checked against dataframe columns so that the returned list
+    does not containing any missing columns.
+    
+    Args:
+        df_columns: list of dataframe columns
+        feat_info: data dictionary
+        
+    Returns:
+        numerical_columns: list of numerical columns
+        categorical_columns: list of categorical columns        
+    '''
+    numerical_columns = feat_info[feat_info.type == 'numeric']
+    numerical_columns = set(numerical_columns).intersection(set(df_columns))
+    
+    categorical_columns = set(df_columns).difference(numerical_columns)
+
+    return list(numerical_columns), list(categorical_columns)
+
