@@ -46,7 +46,7 @@ def get_columns(df_columns, feat_info):
         numerical_columns: list of numerical columns
         categorical_columns: list of categorical columns        
     '''
-    numerical_columns = feat_info[feat_info.type == 'numeric']
+    numerical_columns = feat_info[feat_info.type == 'numeric'].index
     numerical_columns = set(numerical_columns).intersection(set(df_columns))
     
     categorical_columns = set(df_columns).difference(numerical_columns)
