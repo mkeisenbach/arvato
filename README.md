@@ -17,6 +17,7 @@ The data used for this project not publically available. It was provided only to
 
 ## Files
 - features.csv - data dictionary
+- Arvato Report.pdf - Analysis report
 
 ### Customer Segmentation
 - segmentation/Arvato Project Workbook.ipynb - Data expoloration and preprocessing
@@ -54,12 +55,18 @@ The data used for this project not publically available. It was provided only to
 2. Run the Supervised Learning Using Ensemble Methods notebook
 
 ## Results
-The detailed results of the analysis will presented in a Medium Post.
+The detailed analysis of the results can be read in [this Medium post](https://medium.com/@mei.eisenbach/arvato-bertelsmann-customer-analysis-ae1aac59a1ef) or in Arvato Report.pdf.
 
 ### Customer segmentation
 - One group was found to be more likely to be customers: These indivduals were more religious, older and savers.
 - Two groups were found to be less likely to be customers: 1) Individuals with low purchasing activity and wealth (also younger) and 2) Individuals from areas with low population density and were less cultural minded/religiousness
 
 ### Marketing predictions
-The final model had an auc_roc score of 0.6609 and a Kaggle score of 0.68313 (https://www.kaggle.com/c/udacity-arvato-identify-customers/leaderboard).
+The final model had an auc_roc score of 0.76294 and a Kaggle score of 0.80143 (https://www.kaggle.com/c/udacity-arvato-identify-customers/leaderboard).
 
+Model | Local score |Kaggle Score
+--- | --- | ---
+Keras | 0.65836 | 0.65842
+Gradient Boost | 0.76524 | 0.79327
+AdaBoost | 0.76238 | 0.79791
+LightGBM (final) | 0.76294 | 0.80143
