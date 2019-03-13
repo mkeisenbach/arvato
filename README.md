@@ -26,10 +26,10 @@ The data used for this project not publically available. It was provided only to
 - segmenation/fit_clustering.py - File containing clustering pipeline function. This can also be used as a standlone script.
 
 ### Marketing Predictions
-- supervised/Supervised Learning Using Keras.ipynb - Workbook for classification task
+- supervised/Supervised Learning Using Ensemble Methods.ipynb - Classification using ensemble methods 
+- supervised/Supervised Learning Using Keras.ipynb - Classification using a neural network
 - supervised/clean_data - Python script for cleaning classification data
-- supervised/fit_classifier.py - Python script for fitting the classifier
-- supervised/predict.py - Python script for making predictions
+- supervised/preprocess.py - Python file for preprocessing functions
 
 ## Instructions
 ### Customer Segmentation Report
@@ -41,7 +41,7 @@ The data used for this project not publically available. It was provided only to
   - From the segmentation directory, run: 
   <pre>python clean_data.py [data_dir]/Udacity_CUSTOMERS_052018.csv.csv ../features.csv</pre>
 
-2. Run the Customer Segmentation Jupyter notebook
+2. Run the Customer Segmentation Report notebook
 
 ### Marketing predictions
 1. Clean the training and test data
@@ -51,13 +51,7 @@ The data used for this project not publically available. It was provided only to
 - From the supervised directory, 
   <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv ../features.csv</pre>
 
-2. Train the model:
-- From the supervised directory, run: 
-  <pre>python fit_classifier.py [data_dir]/Udacity_MAILOUT_052018_TRAIN_clean.csv  ../features.csv [model]</pre>
-
-3. Make predictions:
-- From the supervised directory, run: 
-  <pre>python predict.py [data_dir]/Udacity_MAILOUT_052018_TEST_clean.csv [model].pkl preds.csv</pre>
+2. Run the Supervised Learning Using Ensemble Methods notebook
 
 ## Results
 The detailed results of the analysis will presented in a Medium Post.
